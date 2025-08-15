@@ -2,36 +2,7 @@ import api from "@/lib/axios";
 import { useState, useEffect } from "react";
 import HeroSection from "@/components/hero-section";
 import MovieSection from "@/components/movie-section";
-interface Backdrops {
-  aspect_ratio: number;
-  height: number;
-  iso_693_1: string;
-  file_path: string;
-  vote_average: number;
-  vote_count: number;
-  width: number;
-}
-interface MovieAPIResponse {
-  id: number;
-  title: string;
-  poster_path?: string;
-  overview: string;
-  backdrop_path?: string;
-  backdrops?: Backdrops[];
-}
-
-interface Movie {
-  id: number;
-  title: string;
-  poster: string;
-  overview: string;
-}
-
-interface TrendingMovie {
-  id: number;
-  title: string;
-  image: string;
-}
+import type { Movie, MovieAPIResponse, TrendingMovie } from "@/types";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);

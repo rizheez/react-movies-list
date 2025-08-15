@@ -1,48 +1,13 @@
 import api from "@/lib/axios";
 import { useState, useEffect } from "react";
 import MovieSection from "@/components/movie-section";
-
+import type { Movie, MovieAPIResponse, Categories, GenresResponse } from "@/types"; // Adjust the import path as needed
 export default function Movie() {
-  type Movie = {
-    id: number;
-    title: string;
-    poster: string;
-    overview: string;
-    backdrop_path?: string;
-    genres?: Categories[];
-  };
-  type Backdrops = {
-    aspect_ratio: number;
-    height: number;
-    iso_693_1: string;
-    file_path: string;
-    vote_average: number;
-    vote_count: number;
-    width: number;
-  };
-  type MovieAPIResponse = {
-    id: number;
-    title: string;
-    poster_path?: string;
-    overview: string;
-    backdrop_path?: string;
-    genre_ids?: Categories[];
-    backdrops?: Backdrops[];
-  };
-  type Categories = {
-    id: number;
-    name: string;
-  };
-
-  type GenresResponse = {
-    genres: Categories[];
-  };
-
   const [isLoading, setIsLoading] = useState(true);
   const [movies, setMovies] = useState<Movie[]>([]);
   const [topRated, setTopRated] = useState<Movie[]>([]);
   const [genres, setGenres] = useState<Categories[]>([]);
-  const [moviesByCategory, setMoviesByCategory] = useState<{ [key: string]: Movie[] }>({});
+  const [moviesByCategory, setMoviesByCategory] = useState<Record<string, Movie[]>>({});
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -86,7 +51,7 @@ export default function Movie() {
         const categories = genresData.genres;
         setGenres(categories);
 
-        const moviesPerCategory = await Promise.all(
+        const moviesPerCategory: [string, Movie[]][] = await Promise.all(
           categories.map(async (genre) => {
             const byGenre = await api.get<{ results: MovieAPIResponse[] }>("/discover/movie", {
               params: {
@@ -103,11 +68,11 @@ export default function Movie() {
               overview: e.overview,
             }));
 
-            return [String(genre.id), mappedMovies] as const;
+            return [String(genre.id), mappedMovies];
           })
         );
 
-        setMoviesByCategory(Object.fromEntries(moviesPerCategory) as { [key: string]: Movie[] });
+        setMoviesByCategory(Object.fromEntries(moviesPerCategory));
       } catch (error) {
         console.error("Error fetching movies:", error);
       } finally {
