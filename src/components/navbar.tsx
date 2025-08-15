@@ -47,7 +47,6 @@ function Navbar() {
           <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Logo" />
           <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
             MovieFinder
-            {isScrolled && <span className="text-red-500">.</span>}
           </span>
         </Link>
 
