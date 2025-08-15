@@ -110,7 +110,7 @@ function Navbar() {
               <Link
                 to="/"
                 className={`block py-2 px-3 text-xl font-extrabold hover:text-blue-700 ${
-                  location.pathname === "/"
+                  currentPath === "/"
                     ? "text-orange-600 dark:text-orange-600 "
                     : "text-black dark:text-white"
                 }`}
@@ -122,7 +122,7 @@ function Navbar() {
               <Link
                 to="/movies"
                 className={`block py-2 px-3 text-xl   hover:text-blue-700 ${
-                  location.pathname === "/movies"
+                  currentPath === "/movies"
                     ? "text-orange-600 dark:text-orange-600 "
                     : "text-black dark:text-white"
                 }`}
@@ -132,9 +132,9 @@ function Navbar() {
             </li>
             <li>
               <Link
-                to="/about"
+                to="/tv"
                 className={`block py-2 px-3 text-xl  hover:text-blue-700 ${
-                  location.pathname === "/movies"
+                  currentPath === "/tv"
                     ? "text-orange-600 dark:text-orange-600 "
                     : "text-black dark:text-white"
                 }`}
