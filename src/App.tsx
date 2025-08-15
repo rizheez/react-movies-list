@@ -14,7 +14,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/movies" element={<Movie />} />
           <Route path="/tv" element={<Tv />} />
-          {/* <Route path="/movie/:id" element={MovieDetail} />  */}
         </Routes>
       </Router>
     </ThemeProvider>
