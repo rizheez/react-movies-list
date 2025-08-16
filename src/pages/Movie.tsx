@@ -51,9 +51,9 @@ export default function Movie() {
         const categories = genresData.genres;
         setGenres(categories);
 
-        const moviesPerCategory: [string, Movie[]][] = await Promise.all(
+        const moviesPerCategory: Record<string, Movie[]>[] = await Promise.all(
           categories.map(async (genre) => {
-            const byGenre = await api.get<{ results: MovieAPIResponse[] }>("/discover/movie", {
+            const { data } = await api.get<{ results: MovieAPIResponse[] }>("/discover/movie", {
               params: {
                 with_genres: genre.id,
                 sort_by: "popularity.desc",
@@ -61,18 +61,18 @@ export default function Movie() {
               },
             });
 
-            const mappedMovies: Movie[] = byGenre.data.results.map((e) => ({
-              poster_path: `https://image.tmdb.org/t/p/w500${e.poster_path}`,
-              name: e.name,
-              id: e.id,
-              overview: e.overview,
-            }));
-
-            return [String(genre.id), mappedMovies];
+            return {
+              [genre.name]: data.results.map((e) => ({
+                poster_path: `https://image.tmdb.org/t/p/w500${e.poster_path}`,
+                name: e.name,
+                id: e.id,
+                overview: e.overview,
+              })),
+            };
           })
         );
 
-        setMoviesByCategory(Object.fromEntries(moviesPerCategory));
+        setMoviesByCategory(moviesPerCategory.reduce((acc, arr) => ({ ...acc, ...arr }), {}));
       } catch (error) {
         console.error("Error fetching movies:", error);
       } finally {
