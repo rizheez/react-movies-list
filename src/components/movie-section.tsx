@@ -2,16 +2,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
-
-interface Movie {
-  id: number;
-  title: string;
-  poster: string;
-}
+import type { Movie, Tv } from "@/types";
 
 interface MovieSectionProps {
   title: string;
-  movies?: Movie[];
+  movies?: Movie[] | Tv[];
   isLoading?: boolean;
   perPage?: number;
 }
@@ -82,13 +77,13 @@ export default function MovieSection({
               >
                 <div className="aspect-[2/3] w-full">
                   <img
-                    src={movie.poster}
-                    alt={movie.title}
+                    src={movie.poster_path}
+                    alt={movie.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <CardContent className="p-2">
-                  <p className="text-sm font-medium truncate">{movie.title}</p>
+                  <p className="text-sm font-medium truncate">{movie.name}</p>
                 </CardContent>
               </Card>
             ))}
