@@ -22,14 +22,13 @@ export default function Home() {
         setMovies(
           data.results.map((e) => ({
             poster_path: `https://image.tmdb.org/t/p/w500${e.poster_path}`,
-            name: e.name,
+            name: e.title,
             id: e.id,
             overview: e.overview,
           }))
         );
         const slicedMovies = data.results.slice(0, 10);
-        console.log(slicedMovies); // Debugging: Cek data yang diambi
-        // Ambil hanya 5 film untuk trending
+        console.log(slicedMovies);
         const trendingWithImage: TrendingMovie[] = await Promise.all(
           slicedMovies.map(async (item) => {
             const detailRes = await api.get<MovieAPIResponse>(`/movie/${item.id}/images`);
@@ -39,7 +38,7 @@ export default function Home() {
 
             return {
               id: item.id,
-              title: item.name,
+              title: item.title,
               image: bestImage,
             };
           })
