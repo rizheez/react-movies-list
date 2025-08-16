@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
-
+import Logo from "@/assets/icon.png";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -44,7 +44,7 @@ function Navbar() {
       <div className="max-w-screen-xl mx-auto flex flex-wrap items-center justify-between p-4">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Logo" />
+          <img src={Logo} className="w-10" alt="Logo" />
           <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
             MovieFinder
           </span>
