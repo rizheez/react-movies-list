@@ -17,7 +17,7 @@ export interface Backdrops {
 }
 export interface MovieAPIResponse {
   id: number;
-  name: string;
+  title: string;
   poster_path?: string;
   overview: string;
   backdrop_path?: string;

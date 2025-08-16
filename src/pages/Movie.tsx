@@ -22,7 +22,7 @@ export default function Movie() {
         setMovies(
           data.results.map((e) => ({
             poster_path: `https://image.tmdb.org/t/p/w500${e.poster_path}`,
-            name: e.name,
+            name: e.title,
             id: e.id,
             overview: e.overview,
           }))
@@ -40,7 +40,7 @@ export default function Movie() {
         setTopRated(
           top.data.results.map((e) => ({
             poster_path: `https://image.tmdb.org/t/p/w500${e.poster_path}`,
-            name: e.name,
+            name: e.title,
             id: e.id,
             overview: e.overview,
           }))
@@ -64,7 +64,7 @@ export default function Movie() {
             return {
               [genre.name]: data.results.map((e) => ({
                 poster_path: `https://image.tmdb.org/t/p/w500${e.poster_path}`,
-                name: e.name,
+                name: e.title,
                 id: e.id,
                 overview: e.overview,
               })),
@@ -82,6 +82,7 @@ export default function Movie() {
 
     fetchMovies();
   }, []);
+  console.log(moviesByCategory);
 
   return (
     <>
@@ -92,7 +93,7 @@ export default function Movie() {
           <MovieSection
             key={g.id}
             title={g.name}
-            movies={moviesByCategory[String(g.id)] || []}
+            movies={moviesByCategory[g.name]}
             isLoading={isLoading}
           />
         ))}
