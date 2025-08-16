@@ -82,7 +82,6 @@ export default function Movie() {
 
     fetchMovies();
   }, []);
-  console.log(moviesByCategory);
 
   return (
     <>
