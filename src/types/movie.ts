@@ -1,7 +1,7 @@
 export interface Movie {
   id: number;
-  title: string;
-  poster: string;
+  name: string;
+  poster_path?: string;
   overview: string;
   backdrop_path?: string;
   genres?: Categories[];
@@ -17,7 +17,7 @@ export interface Backdrops {
 }
 export interface MovieAPIResponse {
   id: number;
-  title: string;
+  name: string;
   poster_path?: string;
   overview: string;
   backdrop_path?: string;
