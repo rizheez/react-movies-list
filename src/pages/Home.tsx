@@ -21,8 +21,8 @@ export default function Home() {
 
         setMovies(
           data.results.map((e) => ({
-            poster: `https://image.tmdb.org/t/p/w500${e.poster_path}`,
-            title: e.title,
+            poster_path: `https://image.tmdb.org/t/p/w500${e.poster_path}`,
+            name: e.name,
             id: e.id,
             overview: e.overview,
           }))
@@ -39,7 +39,7 @@ export default function Home() {
 
             return {
               id: item.id,
-              title: item.title,
+              title: item.name,
               image: bestImage,
             };
           })
