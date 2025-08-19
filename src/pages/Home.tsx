@@ -28,7 +28,6 @@ export default function Home() {
           }))
         );
         const slicedMovies = data.results.slice(0, 10);
-        console.log(slicedMovies);
         const trendingWithImage: TrendingMovie[] = await Promise.all(
           slicedMovies.map(async (item) => {
             const detailRes = await api.get<MovieAPIResponse>(`/movie/${item.id}/images`);

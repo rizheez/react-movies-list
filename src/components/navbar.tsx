@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
@@ -10,12 +10,17 @@ function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [currentPath, setCurrentPath] = useState<string>();
+  const location = useLocation();
   const toggleMenu = () => setIsOpen(!isOpen);
   const handleIconClick = () => inputRef.current?.focus();
-
+  const isHome = currentPath === "/";
+  const [searchParams, setSearchParams] = useSearchParams();
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Searching for:", searchQuery);
+    // Implementasikan logika pencarian di sini
+    setSearchParams({ search: searchQuery });
+
+    // console.log("Searching for:", searchQuery);
     setSearchQuery("");
   };
 
@@ -27,7 +32,6 @@ function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const location = useLocation();
   useEffect(() => {
     setCurrentPath(location.pathname);
   }, [location.pathname]);
@@ -53,22 +57,26 @@ function Navbar() {
         {/* Desktop Right Side */}
         <div className="flex md:order-2 space-x-3 rtl:space-x-reverse">
           <ModeToggle />
-          <div className="relative w-full max-w-sm md:block hidden ">
-            <Search
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
-              size={18}
-              onClick={handleIconClick}
-            />
-            <Input
-              type="text"
-              ref={inputRef}
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9"
-              onKeyDown={(e) => e.key === "Enter" && handleSearch(e)}
-            />
-          </div>
+          {!isHome && (
+            <div className="relative w-full max-w-sm md:block hidden ">
+              <Search
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                size={18}
+                onClick={handleIconClick}
+              />
+              <Input
+                type="text"
+                ref={inputRef}
+                placeholder="Search..."
+                value={searchQuery}
+                defaultValue={searchParams.get("search") || ""}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-9"
+                onKeyDown={(e) => e.key === "Enter" && handleSearch(e)}
+              />
+            </div>
+          )}
+
           {/* Mobile menu button */}
           <button
             onClick={toggleMenu}
